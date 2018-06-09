@@ -5,6 +5,9 @@
  unsigned long currentHr = 0;
  unsigned long horn = 0;
  unsigned long currentSec = 0;
+ char v1='a';
+ char v2='b';
+ char v3='c';
  String myStHr;
  boolean hB=0;
  boolean tc=0;
@@ -18,7 +21,6 @@
 int blueTx=2;   //Tx (보내는핀 설정)at
 int blueRx=3;   //Rx (받는핀 설정)
 const int motorPin  = 4; 
- boolean temp = 0;
 SoftwareSerial mySerial(blueTx, blueRx);  //시리얼 통신을 위한 객체선언
 
 Adafruit_SH1106 display(OLED_RESET);
@@ -37,62 +39,136 @@ void setup() {
     // put your main code here, to run repeatedly:
    
 if(mySerial.available()){
-       if(!temp)
-       {
-         bt = (char)mySerial.read();
-         if(!tc)
-         {
-           
-            myStHr += bt;
-            delay(5);
-            if(myStHr.length() == 2)
-            {
-              currentHr = myStHr.toInt();
-              tc = 1;
-            }
-         }
-         else
-         {
-            myStmin += bt;
-            delay(5);
-            if(myStmin.length() == 2)
-            {
-              currentMin = myStmin.toInt();
-              ts=1;
-              
-            }
-         }
-         if(ts)
-         {
-          myStsec += bt;
-          delay(5);
-          if(myStsec.length()==2)
-          {
-            currentSec = millis();
-            cs = myStsec.toInt();
-            temp=1;
-          }
-         }
-       }
-       else
-       {
+     
+       
           byte data;
           data = mySerial.read();
-          switch(data){
-            case 'a' :
-            { 
-              digitalWrite(motorPin, HIGH); 
-              delay(500);
-              break;
+          delay(5);
+          if(data=='a'){
+            
+              
+              switch(v1)
+              {
+                case 'a' : {
+                  digitalWrite(motorPin,HIGH);
+                  delay(500);
+                  break;
+                }
+
+                case 'b' : {
+                  digitalWrite(motorPin,HIGH);
+                  delay(100);
+                  digitalWrite(motorPin,LOW);
+                  delay(100);
+                  digitalWrite(motorPin,HIGH);
+                  delay(100);
+                  digitalWrite(motorPin,LOW);
+                  break;
+                }
+
+                case 'c' :{
+                  digitalWrite(motorPin,HIGH);
+                  delay(100);
+                  digitalWrite(motorPin,LOW);
+                  delay(100);
+                  digitalWrite(motorPin,HIGH);
+                  delay(100);
+                  digitalWrite(motorPin,LOW);
+                  delay(100);
+                  digitalWrite(motorPin,HIGH);
+                  delay(100);
+                  digitalWrite(motorPin,LOW);
+                  break;
+                }
+               
+              }
+               display.clearDisplay();
+              display.setTextColor(WHITE);
+              display.setTextSize(2);
+              display.setCursor(5,15);
+              display.print("Name");    
+              display.display();
+              delay(2000);
+              
+              
             }
-            default : 
+            else if(data == 'b')
+            {
+              v1 = 'a';
+            }
+            else if(data == 'c')
+            {
+              v1 = 'b';
+            }
+            else if(data == 'd')
+            {
+              v1 = 'c';
+            }
+            else if(data == 'e')
+            {
+              v2 = 'a';
+            }
+            else if(data == 'f')
+            {
+              v2 = 'b';
+            }
+            else if(data == 'g')
+            {
+              v2 = 'c';
+            }
+            else if(data == 'h')
+            {
+              v3 = 'a';
+            }
+            else if(data == 'i')
+            {
+              v3 = 'b';
+            }
+            else if(data == 'j')
+            {
+              v3 = 'c';
+            }
+            else
             {
               digitalWrite(motorPin, LOW); 
-              break;
+               bt = (char)data;
+              if(!tc)
+              {
+           
+                  myStHr += bt;
+                  
+                  if(myStHr.length() == 2)
+                  {
+                    currentHr = myStHr.toInt();
+                    tc = 1;
+                  }
+              }      
+               else
+              {
+                myStmin += bt;
+               
+                if(myStmin.length() == 2)
+                {
+                  currentMin = myStmin.toInt();
+                  ts=1;
+              
+                }
+             }
+            if(ts)
+            {
+              myStsec += bt;
+             
+              if(myStsec.length()==2)
+              {
+                currentSec = millis();
+                cs = myStsec.toInt();
+                tc=0;
+              }
+            }
             }
           }
-       }
-     }
+       
+     
     value = analogRead(0);
    delay(20);
       Serial.println(value);
@@ -104,26 +180,102 @@ if(mySerial.available()){
             {
               if(value>=120)
               {
-                digitalWrite(motorPin, HIGH); 
-              delay(200);
-              digitalWrite(motorPin, HIGH); 
-              delay(200);
+                switch(v2)
+              {
+                case 'a' : {
+                  digitalWrite(motorPin,HIGH);
+                  delay(500);
+                  break;
+                }
+
+                case 'b' : {
+                  digitalWrite(motorPin,HIGH);
+                  delay(100);
+                  digitalWrite(motorPin,LOW);
+                  delay(100);
+                  digitalWrite(motorPin,HIGH);
+                  delay(100);
+                  digitalWrite(motorPin,LOW);
+                  break;
+                }
+
+                case 'c' :{
+                  digitalWrite(motorPin,HIGH);
+                  delay(100);
+                  digitalWrite(motorPin,LOW);
+                  delay(100);
+                  digitalWrite(motorPin,HIGH);
+                  delay(100);
+                  digitalWrite(motorPin,LOW);
+                  delay(100);
+                  digitalWrite(motorPin,HIGH);
+                  delay(100);
+                  digitalWrite(motorPin,LOW);
+                  break;
+                }
+               
+              }
+               
+              display.clearDisplay();
+              display.setTextColor(WHITE);
+              display.setTextSize(2);
+              display.setCursor(5,15);
+              display.print("Car Horn");    
+              display.display();
+              delay(2000);
               hB=0;
               }
-              else if(value>=60)
+              else if(value<=80||value>=70)
               {
-                
-                digitalWrite(motorPin, HIGH); 
-              delay(100);
-              digitalWrite(motorPin, HIGH); 
-              delay(100);
-              digitalWrite(motorPin, HIGH);
-              delay(100);
+               
+               switch(v3)
+              {
+                case 'a' : {
+                  digitalWrite(motorPin,HIGH);
+                  delay(500);
+                  break;
+                }
+
+                case 'b' : {
+                  digitalWrite(motorPin,HIGH);
+                  delay(100);
+                  digitalWrite(motorPin,LOW);
+                  delay(100);
+                  digitalWrite(motorPin,HIGH);
+                  delay(100);
+                  digitalWrite(motorPin,LOW);
+                  break;
+                }
+
+                case 'c' :{
+                  digitalWrite(motorPin,HIGH);
+                  delay(100);
+                  digitalWrite(motorPin,LOW);
+                  delay(100);
+                  digitalWrite(motorPin,HIGH);
+                  delay(100);
+                  digitalWrite(motorPin,LOW);
+                  delay(100);
+                  digitalWrite(motorPin,HIGH);
+                  delay(100);
+                  digitalWrite(motorPin,LOW);
+                  break;
+                }
+              }
+              
+              display.clearDisplay();
+              display.setTextColor(WHITE);
+              display.setTextSize(2);
+              display.setCursor(5,15);
+              display.print("Emergency");    
+              display.display();
+              delay(2000);
               hB=0;
               }
               else
               {
                 hB=0;
+               
               }
             }
             
