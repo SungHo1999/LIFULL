@@ -31,4 +31,53 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <Button
+        android:id="@+id/blueTooth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bluetooth" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <Spinner
+            android:id="@+id/ptB1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/pt1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="name Pattern" />
+
+        <Spinner
+            android:id="@+id/ptB2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/pt2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="car Pattern" />
+
+        <Spinner
+            android:id="@+id/ptB3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/pt3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="emg Pattern" />
+
+    </LinearLayout>
+
+
+
 </LinearLayout>

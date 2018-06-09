@@ -8,10 +8,9 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
-import android.os.Vibrator;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -19,14 +18,12 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.os.Bundle;
-import android.util.Log;
 
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
@@ -45,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     int mPariedDeviceCount = 0;
     Set<BluetoothDevice> mDevices;
     BluetoothAdapter mBluetoothAdapter;
-
+    AudioManager audio;
     BluetoothDevice mRemoteDevie;
     BluetoothSocket mSocket = null;
     OutputStream mOutputStream;
@@ -62,11 +59,13 @@ public class MainActivity extends AppCompatActivity {
     boolean nCount=false;
     String resultText;
     Button bt1,bt2;
+    Button blueTooth,pt1,pt2,pt3;
     boolean started = false;
     boolean speech = false;
-    boolean timec = false;
-    TextView tv;
-    TextView tv1;
+
+    ArrayAdapter<CharSequence> adspin;
+
+    Spinner ptB1,ptB2,ptB3;
 
     long now ;
     Date date ;
@@ -74,23 +73,39 @@ public class MainActivity extends AppCompatActivity {
     String getTime ;
 
     Intent i;
-    Vibrator vibrator;
     SpeechRecognizer mRecognizer;
     Context mContext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-         vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+        adspin = ArrayAdapter.createFromResource(this,R.array.pattern,R.layout.support_simple_spinner_dropdown_item);
         edName = (EditText) findViewById(R.id.editText);
         bt1 = (Button)findViewById(R.id.bt1);
         bt2 = (Button)findViewById(R.id.bt2) ;
-         now = System.currentTimeMillis();
+        blueTooth = (Button)findViewById(R.id.blueTooth) ;
+        pt1 = (Button)findViewById(R.id.pt1);
+        pt2 = (Button)findViewById(R.id.pt2);
+        pt3 = (Button)findViewById(R.id.pt3);
+        ptB1 = (Spinner)findViewById(R.id.ptB1);
+        ptB2 = (Spinner)findViewById(R.id.ptB2);
+        ptB3 = (Spinner)findViewById(R.id.ptB3);
+        ptB1.setAdapter(adspin);
+        ptB2.setAdapter(adspin);
+        ptB3.setAdapter(adspin);
+        now = System.currentTimeMillis();
        date = new Date(now);
          sdf = new SimpleDateFormat("HHmmss");
         getTime = sdf.format(date);
-
-
+        audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        View.OnClickListener listener3 = new View.OnClickListener()
+        {
+            public void onClick(View view)
+            {
+                checkBluetooth();
+            }
+        };
+        blueTooth.setOnClickListener(listener3);
         View.OnClickListener listener1 = new View.OnClickListener()
         {
             public void onClick(View view)
@@ -118,15 +133,77 @@ public class MainActivity extends AppCompatActivity {
                     speech = true;
                     bt1.setText("Stop");
                     mRecognizer.startListening(i);
-                    if (!timec) {
-                        timec = true;
-                        sendData(getTime);
-                        Toast.makeText(MainActivity.this,getTime,Toast.LENGTH_SHORT).show();
-                    }
+
+                    sendData(getTime);
+                    audio.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
+                    audio.setStreamVolume(AudioManager.STREAM_MUSIC,0,AudioManager.FLAG_VIBRATE);
+
                 }
             }
         };
-
+        View.OnClickListener ptListener = new View.OnClickListener()
+        {
+            public void onClick(View view)
+            {
+                String value = ptB1.getSelectedItem().toString();
+                if (value.equals("1"))
+                {
+                    sendData("b");
+                    Toast.makeText(MainActivity.this, "1", Toast.LENGTH_SHORT).show();
+                }
+                else if (value.equals("2"))
+                {
+                    sendData("c");
+                    Toast.makeText(MainActivity.this, "2", Toast.LENGTH_SHORT).show();
+                }
+                else if (value.equals("3"))
+                {
+                    sendData("d");
+                    Toast.makeText(MainActivity.this, "3", Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+        View.OnClickListener ptListener2 = new View.OnClickListener()
+        {
+            public void onClick(View view)
+            {
+                String value = ptB2.getSelectedItem().toString();
+                if (value.equals("1"))
+                {
+                    sendData("e");
+                }
+                else if (value.equals("2"))
+                {
+                    sendData("f");
+                }
+                else if (value.equals("3"))
+                {
+                    sendData("g");
+                }
+            }
+        };
+        View.OnClickListener ptListener3 = new View.OnClickListener()
+        {
+            public void onClick(View view)
+            {
+                String value = ptB3.getSelectedItem().toString();
+                if (value.equals("1"))
+                {
+                    sendData("h");
+                }
+                else if (value.equals("2"))
+                {
+                    sendData("i");
+                }
+                else if (value.equals("3"))
+                {
+                    sendData("j");
+                }
+            }
+        };
+        pt1.setOnClickListener(ptListener);
+        pt2.setOnClickListener(ptListener2);
+        pt3.setOnClickListener(ptListener3);
         bt1.setOnClickListener(listener2);
         //SpeechRecognizer의 초기화
         i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -160,7 +237,7 @@ public class MainActivity extends AppCompatActivity {
 
                 .check();
 
-        checkBluetooth();
+
 
     }
 
@@ -422,7 +499,7 @@ public class MainActivity extends AppCompatActivity {
                     selectDevice();
                 }
                 else if(resultCode == RESULT_CANCELED) { // 블루투스 비활성화 상태 (종료)
-                    Toast.makeText(getApplicationContext(), "블루투수를 사용할 수 없어 프로그램을 종료합니다", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "블루투스를 사용할 수 없어 프로그램을 종료합니다", Toast.LENGTH_LONG).show();
 
                 }
                 break;
