@@ -5,7 +5,13 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/layout1"
     tools:context="com.lifull.myapplication.MainActivity">
+
+    <com.lifull.myapplication.AutoScrollViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
 
 
     <EditText
@@ -16,26 +22,41 @@
         android:inputType="textPersonName"
         android:text="Name" />
 
-    <Button
 
-
-        android:text="Start"
-        android:id="@+id/bt1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <Button
-
-
-        android:text="name"
-        android:id="@+id/bt2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/blueTooth"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bluetooth" />
+        android:orientation="horizontal"
+        android:layout_marginBottom="20dp">
+
+        <Button
+
+
+            android:text="음성인식"
+            android:id="@+id/bt1"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="25dp"
+            android:background="@drawable/startbt_state"
+            android:textColor="#FCFCFC"
+            android:textStyle="bold"/>
+        <Button
+
+
+
+            android:id="@+id/bt2"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="40dp"
+            android:background="@drawable/namebt_state"/>
+
+        <Button
+            android:id="@+id/blueTooth"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="40dp"
+            android:background="@drawable/bluetoothbt_state"/>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,38 +64,51 @@
         android:orientation="vertical">
 
 
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+            <Button
+                android:id="@+id/pt1"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/nameptbt_state"/>
+        </LinearLayout>
         <Spinner
             android:id="@+id/ptB1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/pt1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="name Pattern" />
 
+        <Button
+            android:id="@+id/pt2"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/carbt_state"/>
         <Spinner
             android:id="@+id/ptB2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/pt2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="car Pattern" />
 
+        <Button
+            android:id="@+id/pt3"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:padding="0sp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/emerbt_state"/>
         <Spinner
             android:id="@+id/ptB3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
-        <Button
-            android:id="@+id/pt3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="emg Pattern" />
 
     </LinearLayout>
 
